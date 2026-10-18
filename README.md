@@ -6,25 +6,67 @@ Xie-s-repo/
 
 
 
-本專題為一套結合嵌入式微控制器 \*\*STM32 (NUCLEO-G474RE)\*\* 與上位機 \*\*Python (Jupyter Notebook)\*\* 的高精確度反應時間測試與紀錄系統。透過硬體狀態機（State Machine）控制三色 LED 與按鈕中斷（EXTI），配合微秒級定時器（TIM2）進行時間量測，並將數據傳送至 Python 端進行即時解析與成績顯示
+本專題為一套結合嵌入式微控制器 \*\*STM32 (NUCLEO-G474RE)\*\* 與上位機 \*\*Python (Jupyter Notebook)\*\* 的高精確度反應時間測試與紀錄系統。透過硬體狀態機（State Machine）控制三色 LED 與按鈕中斷（EXTI），配合微秒級定時器（TIM2）進行時間量測，並將數據傳送至 Python 端進行即時解析與成績顯示。
 
-├── .gitignore                     # Git 版本控制忽略檔 (自動過濾編譯中間檔與快取)
 
-├── README.md                      # 專案說明文件
 
-├── python terminal/               # Python 上位機程式資料夾
+\---
 
-│   └── Untitled3(1).ipynb         # Jupyter Notebook 上位機監聽與數據解析腳本
 
-└── stm32\_firmware/                # STM32 韌體專案資料夾 (STM32CubeIDE)
 
-&#x20;   ├── Core/                      # 核心 C 語言程式碼與標頭檔
+\## 📁 專案目錄結構
 
-&#x20;   │   ├── Inc/                   # 標頭檔 (.h)
 
-&#x20;   │   └── Src/                   # 源碼檔案 (main.c)
 
-&#x20;   ├── Drivers/                   # STM32 HAL 庫與 CMSIS 驅動
+```text
 
-&#x20;   └── stm32g474re.ioc            # STM32CubeMX 硬體腳位與週邊配置文件
+Xie-s-repo/
+
+├── .gitignore                             # Git 版本控制忽略檔 (自動過濾編譯中間檔與快取)
+
+├── README.md                              # 專案說明文件
+
+├── python terminal/                       # Python 上位機程式資料夾
+
+│   └── Untitled3(1).ipynb                 # Jupyter Notebook 上位機監聽、數據解析與單位轉換腳本
+
+└── stm32\_firmware/                        # STM32 韌體專案資料夾 (STM32CubeIDE)
+
+&#x20;   ├── Core/                              # 使用者核心程式碼與設定
+
+&#x20;   │   ├── Inc/                           # 標頭檔 (.h) 目錄
+
+&#x20;   │   │   ├── main.h                     # 全域腳位定義、狀態定義與主要標頭檔
+
+&#x20;   │   │   ├── stm32g4xx\_hal\_conf.h       # HAL 庫模組啟用與硬體參數設定檔
+
+&#x20;   │   │   └── stm32g4xx\_it.h             # 中斷服務常式標頭檔
+
+&#x20;   │   └── Src/                           # 主程式與系統原始碼 (.c) 目錄
+
+&#x20;   │       ├── main.c                     # 主程式 (FSM狀態機、EXTI按鈕中斷、TIM2計時與UART發送)
+
+&#x20;   │       ├── stm32g4xx\_hal\_msp.c        # 微控制器支援套件 (MSP) 初始化程式
+
+&#x20;   │       ├── stm32g4xx\_it.c             # 中斷處理函式 (Interrupt Service Routines)
+
+&#x20;   │       └── system\_stm32g4xx.c         # 系統時鐘與核心底層初始化
+
+&#x20;   ├── Drivers/                           # 晶片原廠與 CMSIS 驅動庫
+
+&#x20;   │   ├── CMSIS/                         # ARM Cortex-M 核心標準介面與暫存器定義
+
+&#x20;   │   └── STM32G4xx\_HAL\_Driver/          # ST 官方 HAL 硬體抽象層驅動 (GPIO, TIM, UART等)
+
+&#x20;   ├── Startup/                           # 晶片啟動程式碼
+
+&#x20;   │   └── startup\_stm32g474retx.s        # 組合語言啟動檔 (設定中斷向量表與堆疊)
+
+&#x20;   ├── .cproject                          # Eclipse / STM32CubeIDE 專案編譯設定檔
+
+&#x20;   ├── .project                           # Eclipse / STM32CubeIDE 專案架構檔
+
+&#x20;   ├── stm32g474re.ioc                    # STM32CubeMX 圖形化周邊配置專案檔
+
+&#x20;   └── STM32G474RETX\_FLASH.ld             # 記憶體配置與鏈結腳本 (Linker Script)
 
