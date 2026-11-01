@@ -41,13 +41,41 @@
 * **終端機設定**：`COM4` (依裝置管理員為準), 115200 Baud Rate, 8N1。
 * **執行命令**：開啟 Anaconda Prompt 輸入 `jupyter notebook`，執行 `python terminal/Untitled3(1).ipynb`。
 
-## 7. 程式結構：哪個檔做什麼、ISR 與主迴圈分工
-* **檔案目錄**：
+## 7. 實作照片：每張附一行圖說
+
+![系統全貌與整體擺設圖](Pictures/Fullshot.jpg)
+*圖 1：F1 賽車起跑測試儀系統整體實作畫面，包含 STM32 主板、麵包板周邊電路與電腦端 Python 顯示畫面。*
+
+![硬體電路與線路接線細節](Pictures/LIne-setup.jpg)
+*圖 2：NUCLEO-G474RE 連結外接紅黃綠三色 LED（搭配限流電阻）與獨立 EXTI 按鈕之電路接線細節。*
+
+![STM32 微控制器核心特寫](Pictures/MCUhighlight.jpg)
+*圖 3：NUCLEO-G474RE 開發板特寫，展示板載 ST-Link 虛擬 COM Port 與微控制器系統。*
+
+## 8. AI 使用說明：哪段請 AI、你怎麼查核
+* **ChatGPT/Gemini 協助內容**：
+  * 協助撰寫與排版 Markdown `README.md` 的架構與樹狀目錄[cite: 5]。
+  * 提供 Python `pySerial` 解析微秒字串並換算為秒數的代碼片段[cite: 4]。
+* **查核方式**：
+  * 實際於 Jupyter Notebook 測試 COM Port 接收，確認 `TIME:XXXX_US` 能正確除以 1,000,000 並轉換為秒[cite: 4]。
+  * 透過 Git Bash 測試 `git push` 後在 GitHub 網頁查看渲染效果，確保圖片與結構無破圖[cite: 4, 5]。
+
+## 9. 已知限制：哪些用替身、換真貨要改哪裡
+* **限制一（按鈕觸感）**：目前使用普通微觸按鈕替代真實賽車離合器撥片，若換成真貨需調整 EXTI 去彈跳時間（Debounce Time）。
+* **限制二（燈號功率）**：目前採用小功率 LED，若換成賽車場高亮度燈牆，需新增 Darlington 電晶體驅動電路或繼電器模組。
+
+## 10. 程式結構：哪個檔做什麼、ISR 與主迴圈分工
+* **ISR 與主迴圈分工**：
+  * `HAL_GPIO_EXTI_Callback()`：中斷服務常式，負責捕捉按鈕按下瞬間，設定標記與時間點。
+  * `main.c` 主迴圈：負責 FSM 狀態切換 (`GAME_READY` -> `GAME_COUNTDOWN` -> `GAME_GO` -> `GAME_OVER`) 與 UART 訊息發送。
+
+* **檔案目錄與說明**：
+
 ```text
 Xie-s-repo/
 ├── .gitignore                             # Git 版本控制忽略檔
 ├── README.md                              # 專案說明文件
-├── Pictures/                              # 實作照片資料夾 (引用網址/路點)
+├── Pictures/                              # 實作照片資料夾
 │   ├── Fullshot.jpg                       # 系統全貌與整體擺設圖
 │   ├── Line-setup.jpg                     # 硬體電路與線路接線細節
 │   └── MCUhighlight.jpg                   # STM32 微控制器核心特寫
