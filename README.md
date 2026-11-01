@@ -36,3 +36,13 @@ Xie-s-repo/
     ├── .project                           # Eclipse / STM32CubeIDE 專案架構檔
     ├── stm32g474re.ioc                    # STM32CubeMX 圖形化周邊配置專案檔
     └── STM32G474RETX_FLASH.ld             # 記憶體配置與鏈結腳本 (Linker Script)
+## 📷 實作照片與硬體配置
+
+![系統全貌與整體擺設圖](Pictures/Fullshot.jpg)
+*圖 1：F1 賽車起跑測試儀系統整體實作畫面*
+
+![硬體電路與線路接線細節](Pictures/Line-setup.jpg)
+*圖 2：NUCLEO-G474RE 連結外接紅黃綠三色 LED 與按鈕之電路接線細節*
+
+![STM32 微控制器核心特寫](Pictures/MCUhighlight.jpg)
+*圖 3：NUCLEO-G474RE 開發板特寫*
