@@ -83,3 +83,5 @@ Xie-s-repo/
 │   └── Untitled3(1).ipynb                 # Jupyter Notebook 序列埠監聽與解析腳本
 └── Minterm_Project/                       # STM32 韌體專案資料夾 (CubeIDE)
     └── Core/Src/main.c                    # 主程式 (FSM 狀態機與計時邏輯)
+
+..
